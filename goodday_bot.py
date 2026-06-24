@@ -496,17 +496,24 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await query.message.reply_text(SECRET_TASK_TEXT, parse_mode="HTML", reply_markup=keyboard)
 
     # --- VIP Браслеты (главный экран выбора) ---
-    elif data == "bracelet" or data == "upgrade":
+    elif data == "bracelet":
+        # Показываем возможности VIP и VIP DELUXE, потом кнопку "Улучшить браслет"
         keyboard = InlineKeyboardMarkup([
+            [InlineKeyboardButton("⬆️ Улучшить браслет", callback_data="upgrade")],
             [InlineKeyboardButton("🔙 Главное меню", callback_data="menu")],
         ])
-        # Сначала приглашение, затем возможности VIP и VIP DELUXE
-        await context.bot.send_message(chat_id=chat_id, text=UPGRADE_TEXT, parse_mode="HTML")
         await context.bot.send_message(chat_id=chat_id, text=VIP_TEXT, parse_mode="HTML")
         await context.bot.send_message(
             chat_id=chat_id, text=DELUXE_TEXT, parse_mode="HTML",
             reply_markup=keyboard
         )
+
+    elif data == "upgrade":
+        # По кнопке "Улучшить браслет" — текст-приглашение с формулой
+        keyboard = InlineKeyboardMarkup([
+            [InlineKeyboardButton("🔙 Главное меню", callback_data="menu")],
+        ])
+        await query.message.reply_text(UPGRADE_TEXT, parse_mode="HTML", reply_markup=keyboard)
 
     # --- Браслет QUEST ---
     elif data == "b_quest":
