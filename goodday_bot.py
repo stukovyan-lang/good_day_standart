@@ -387,12 +387,12 @@ def main_menu_keyboard():
         [InlineKeyboardButton("📋 Программа феста", callback_data="program")],
         [InlineKeyboardButton("🗺 Карта феста", callback_data="map")],
         [InlineKeyboardButton("🎁 Актуальные призы", callback_data="prizes")],
-        [InlineKeyboardButton("📸 Фотоальбом феста", callback_data="photos")],
         [InlineKeyboardButton("🎯 Начать квест", callback_data="quest")],
         [InlineKeyboardButton("🎫 Что может мой браслет", callback_data="b_quest")],
         [InlineKeyboardButton("💎 VIP Браслеты", callback_data="bracelet")],
         [InlineKeyboardButton("🏆 Большой розыгрыш", callback_data="raffle")],
         [InlineKeyboardButton("🌐 Наши соц. сети", callback_data="socials")],
+        [InlineKeyboardButton("📸 Фотоальбом феста", callback_data="photos")],
     ])
 
 
@@ -472,7 +472,6 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # --- #3 Призы ---
     elif data == "prizes":
         keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton("✨ Улучшить браслет", callback_data="bracelet")],
             [InlineKeyboardButton("🔙 Назад в меню", callback_data="menu")],
         ])
         await query.message.reply_text(
@@ -492,7 +491,6 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # --- Секретное задание ---
     elif data == "secret":
         keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton("🎯 Начать квест", callback_data="quest")],
             [InlineKeyboardButton("🔙 Главное меню", callback_data="menu")],
         ])
         await query.message.reply_text(SECRET_TASK_TEXT, parse_mode="HTML", reply_markup=keyboard)
