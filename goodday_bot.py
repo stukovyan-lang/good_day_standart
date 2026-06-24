@@ -158,14 +158,13 @@ UPGRADE_TEXT = (
     "подарки и привилегии.\n\n"
     "📍 Обратитесь на Инфо-центр возле фонтана.\n\n"
     "Стоимость улучшения рассчитывается по формуле:\n"
-    "<i>Цена нового браслета − стоимость текущего браслета + 5 BYN</i>\n\n"
-    "Выбери браслет 👇"
+    "<i>Цена нового браслета − стоимость текущего браслета + 5 BYN</i>"
 )
 
 # --- STANDART ---
 STANDART_TEXT = (
     "🔵 <b>STANDART</b>\n"
-    "Для родителей и их детей 👨‍👩‍👧‍👦\n\n"
+    "Отлично подойдёт для каждого 💙\n\n"
     "<b>В подарок к браслету вы получаете:</b>\n"
     "✅ Участие в Good Day Quest\n"
     "✅ Получение и обмен Good Token на призы\n"
@@ -491,6 +490,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # --- Секретное задание ---
     elif data == "secret":
         keyboard = InlineKeyboardMarkup([
+            [InlineKeyboardButton("🎁 Актуальные призы", callback_data="prizes")],
             [InlineKeyboardButton("🔙 Главное меню", callback_data="menu")],
         ])
         await query.message.reply_text(SECRET_TASK_TEXT, parse_mode="HTML", reply_markup=keyboard)
@@ -498,11 +498,15 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # --- VIP Браслеты (главный экран выбора) ---
     elif data == "bracelet" or data == "upgrade":
         keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton("🟢 Возможности браслета VIP", callback_data="vip")],
-            [InlineKeyboardButton("🟡 Возможности браслета VIP DELUXE", callback_data="deluxe")],
             [InlineKeyboardButton("🔙 Главное меню", callback_data="menu")],
         ])
-        await query.message.reply_text(UPGRADE_TEXT, parse_mode="HTML", reply_markup=keyboard)
+        # Сначала приглашение, затем возможности VIP и VIP DELUXE
+        await context.bot.send_message(chat_id=chat_id, text=UPGRADE_TEXT, parse_mode="HTML")
+        await context.bot.send_message(chat_id=chat_id, text=VIP_TEXT, parse_mode="HTML")
+        await context.bot.send_message(
+            chat_id=chat_id, text=DELUXE_TEXT, parse_mode="HTML",
+            reply_markup=keyboard
+        )
 
     # --- Браслет QUEST ---
     elif data == "b_quest":
