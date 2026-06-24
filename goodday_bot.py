@@ -518,7 +518,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # --- Браслет QUEST ---
     elif data == "b_quest":
         keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton("⬆️ Улучшить браслет", callback_data="bracelet")],
+            [InlineKeyboardButton("⬆️ Улучшить браслет", callback_data="upgrade")],
             [InlineKeyboardButton("🔙 Главное меню", callback_data="menu")],
         ])
         await query.message.reply_text(STANDART_TEXT, parse_mode="HTML", reply_markup=keyboard)
