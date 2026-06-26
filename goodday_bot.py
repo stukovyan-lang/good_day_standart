@@ -103,6 +103,15 @@ PRIZES_CAPTION = (
 # Имя файла со списком призов
 PRIZES_PDF = "prizes.pdf"
 
+TASKS_TEXT = (
+    "📋 <b>СПИСОК ЗАДАНИЙ</b>\n\n"
+    "Good Token уже ждут тебя! 💙\n"
+    "Выполняй задания на площадках, участвуй в активностях и собирай "
+    "токены, которые можно обменять на призы в Центре выдачи "
+    "(локация №9).\n\n"
+    '<a href="https://docs.google.com/document/d/1lxeNaHUH2hTne-TpQnVE3ltMSgiE1ud7/edit">⬇️ Открыть список заданий</a>'
+)
+
 QUEST_TEXT = (
     "🎯 <b>Добро пожаловать в GOOD DAY QUEST!</b>\n\n"
     "Поздравляем, ты в игре.\n"
@@ -481,11 +490,22 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # --- Квест ---
     elif data == "quest":
         keyboard = InlineKeyboardMarkup([
+            [InlineKeyboardButton("📋 Список заданий", callback_data="tasks")],
             [InlineKeyboardButton("🎁 Посмотреть актуальный список призов", callback_data="prizes")],
             [InlineKeyboardButton("🤫 Секретное задание", callback_data="secret")],
             [InlineKeyboardButton("🔙 Главное меню", callback_data="menu")],
         ])
         await query.message.reply_text(QUEST_TEXT, parse_mode="HTML", reply_markup=keyboard)
+
+    # --- Список заданий ---
+    elif data == "tasks":
+        keyboard = InlineKeyboardMarkup([
+            [InlineKeyboardButton("🔙 Главное меню", callback_data="menu")],
+        ])
+        await query.message.reply_text(
+            TASKS_TEXT, parse_mode="HTML",
+            reply_markup=keyboard, disable_web_page_preview=True
+        )
 
     # --- Секретное задание ---
     elif data == "secret":
